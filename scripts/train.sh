@@ -1,11 +1,16 @@
 #!/bin/bash
+training_data="/data/training_data/"
 manifest_path="/data/wav2vec/manifest/"
 model_path="/data/wav2vec/model/"
 
-python3 /data/fairseq/examples/wav2vec/wav2vec_manifest.py /data/training_data/ --dest ${manifest_path} --ext wav --valid-percent 0.01
+
+
+
+#Prepare Training Data Manifest
+python3 /data/fairseq/examples/wav2vec/wav2vec_manifest.py "${training_data}" --dest ${manifest_path} --ext wav --valid-percent 0.01
 
  #--distributed-world-size 64 --distributed-port 80 "${manifest_path}" \
-
+#
 python3 /data/fairseq/train.py "${manifest_path}" \
 --save-dir "${model_path}" --fp16 --num-workers 1 --task audio_pretraining --criterion wav2vec --arch wav2vec2 \
 --log-keys '["prob_perplexity","code_perplexity","temp"]' --quantize-targets --extractor-mode default \
