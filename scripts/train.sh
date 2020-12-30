@@ -26,6 +26,9 @@ python3 /data/fairseq/examples/wav2vec/wav2vec_manifest.py "${training_data}" --
 
 
 #Training a new wav2vec 2.0 base model
+mkdir -p "${model_directory}"
+pushd "${model_directory}"
 update_frequency=$((64/ammount_of_gpus))
 echo "GPUs: $ammount_of_gpus  Update Frequency: $update_frequency"
 fairseq-hydra-train task.data="${manifest_directory}" distributed_training.distributed_world_size="${ammount_of_gpus}" optimization.update_freq="[${update_frequency}]" --config-dir "${config_directory}" --config-name pretraining
+popd

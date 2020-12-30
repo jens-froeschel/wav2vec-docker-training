@@ -44,4 +44,4 @@ docker stop wav2vec
 docker rm wav2vec 
 ```
 
-
+By default the trained model is saved to $PWD/data/wav2vec/model/...
